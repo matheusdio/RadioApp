@@ -217,6 +217,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.view.addSubview(container)
         self.view.backgroundColor = .white
         self.radioCollectionView.delegate = self
@@ -224,6 +225,7 @@ class ViewController: UIViewController {
         self.setHierachy()
         self.setConstraints()
         self.createRadioStation()
+        
     }
     
     @objc func buttonAction(sender: UIButton!) {
@@ -231,6 +233,8 @@ class ViewController: UIViewController {
             buttonTapped = true
         }
     }
+    
+    
     
     func createRadioStation() {
         
@@ -309,7 +313,7 @@ class ViewController: UIViewController {
             previousButton.widthAnchor.constraint(equalToConstant: 60),
             
             playButton.topAnchor.constraint(equalTo: self.controlMusicButtonsContainerView.topAnchor, constant: 2),
-            playButton.leadingAnchor.constraint(equalTo: self.previousButton.leadingAnchor, constant: 115),
+            playButton.leadingAnchor.constraint(equalTo: self.previousButton.leadingAnchor, constant: 128),
             playButton.heightAnchor.constraint(equalToConstant: 100),
             playButton.widthAnchor.constraint(equalToConstant: 100),
             
@@ -334,7 +338,7 @@ class ViewController: UIViewController {
             radioCollectionView.bottomAnchor.constraint(equalTo: self.radioStationViewContainer.bottomAnchor, constant: -65),
             
             radioStationLabel.topAnchor.constraint(equalTo: self.radioCollectionView.bottomAnchor, constant: 5),
-            radioStationLabel.leadingAnchor.constraint(equalTo: self.radioStationViewContainer.leadingAnchor, constant: 147),
+            radioStationLabel.leadingAnchor.constraint(equalTo: self.radioStationViewContainer.leadingAnchor, constant: 155),
             //radioStationLabel.trailingAnchor.constraint(equalTo: self.radioStationViewContainer.trailingAnchor, constant: -150)
             
         
@@ -362,12 +366,18 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         cell?.setupLayout()
         cell?.stationLabel.text = self.stationArray[indexPath.item].stationNumber
         
-        if let selected = selectedStation {
+        if var selected = selectedStation {
             if selected == stationArray[indexPath.item] {
                 
                 cell?.stationLabel.textColor = #colorLiteral(red: 0.2176100016, green: 0.40457955, blue: 0.524797678, alpha: 1)
                 cell?.stationLabel.font = UIFont.systemFont(ofSize: 48)
                 radioStationLabel.text = self.selectedStation?.stationName
+                
+                if nextButton.isTouchInside == true {
+                    selectedStation = stationArray[indexPath.item+1]
+                    
+                }
+            
             }
             else if buttonTapped == true {
                 selectedStation = stationArray[indexPath.item+1]
